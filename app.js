@@ -19,6 +19,25 @@ app.get('/', (req, res) => {
   });
 });
 
+
+app.post('/add', (req, res) => {
+  fs.readFile('./db.json', 'utf8', (err, data) => {
+    if (err) {
+      console.log("err");
+    } else {
+      let nodes = JSON.parse(data);
+      nodes.push(req.body.data)
+      fs.writeFile('./db.json', JSON.stringify(nodes), {flag:'w'}, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(nodes);
+        }
+      });
+    }
+  });
+});
+
 app.post('/', (req, res) => {
   fs.readFile('./db.json', 'utf8', (err, data) => {
     if (err) {

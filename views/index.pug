@@ -20,14 +20,26 @@ script.
     }
   });
 
+  chart.onAddNode((args) => {
+      fetch('/add', {
+          method: "POST",
+          body: JSON.stringify(args),
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+  });
+
   chart.onUpdateNode((args) => {
-    //- console.log(args);
     fetch('/', {
       method: 'POST',
+      body: JSON.stringify(args),
       headers: {
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(args)
+      }
     })
     .then(response => response.json())
     .then(data => console.log(data))
