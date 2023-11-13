@@ -47,6 +47,19 @@ script.
   //return false; to cancel the operation
   });
 
+  chart.onRemoveNode((args) => {
+      fetch("/remove", {
+          method: "POST",
+          body: JSON.stringify(args),
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+      return true;
+  });
 
   chart.load(data)
 

@@ -57,4 +57,22 @@ app.post('/', (req, res) => {
   });
 });
 
+app.post('/remove', (req, res) => {
+  fs.readFile('./db.json', 'utf8', (err, data) => {
+    if (err) {
+      console.log("err");
+    } else {
+      let nodes = JSON.parse(data);
+      nodes = nodes.filter((node) => node.id !== req.body.id);
+      fs.writeFile('./db.json', JSON.stringify(nodes), {flag:'w'}, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(nodes);
+        }
+      });
+    }
+  });
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
