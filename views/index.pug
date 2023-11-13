@@ -1,0 +1,41 @@
+script(src='/js/orgchart.js')
+
+link(rel="icon" href="/favicon.png" type="image/x-icon")
+
+#tree
+
+script.
+
+  var data = JSON.parse(!{JSON.stringify(json)});
+
+  let chart = new OrgChart(document.getElementById("tree"), { 
+    nodeBinding: {
+      field_0: "name"
+    },
+    nodeMenu: {
+      details: { text: "Details" },
+      edit: { text: "Edit" },
+      add: { text: "Add" },
+      remove: { text: "Remove" }
+    }
+  });
+
+  chart.onUpdateNode((args) => {
+    //- console.log(args);
+    fetch('/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(args)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error("dfgdsfgsdfgdsfg"));
+  //return false; to cancel the operation
+  });
+
+
+  chart.load(data)
+
+
